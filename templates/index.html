@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- (Your CSS and Head content remains the same) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna - AI Assistant</title>
+    <script src="{{ url_for('static', filename='xp_model_handler.js') }}"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* (All your previous CSS is the same) */
+        .confirmation-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            justify-content: flex-start;
+        }
+
+        .confirm-btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1.5px solid;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .confirm-btn.yes {
+            background: rgba(168, 149, 111, 0.1);
+            border-color: #a8956f;
+            color: #6b5b73;
+        }
+
+        .confirm-btn.yes:hover {
+            background: linear-gradient(135deg, #a8956f 0%, #c4b589 100%);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(168, 149, 111, 0.3);
+        }
+
+        .confirm-btn.no {
+            background: rgba(214, 118, 118, 0.1);
+            border-color: #d67676;
+            color: #6b5b73;
+        }
+
+        .confirm-btn.no:hover {
+            background: linear-gradient(135deg, #d67676 0%, #e89393 100%);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(214, 118, 118, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #faf8f5 0%, #f5f2ed 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            color: #6b5b73;
+            padding: 24px 20px 20px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(209, 196, 184, 0.3);
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: #6b5b73;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .header-icon {
+            color: #a8956f;
+            font-size: 26px;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            background: transparent;
+        }
+
+        .chat-area::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb {
+            background: rgba(168, 149, 111, 0.3);
+            border-radius: 3px;
+        }
+
+        .message {
+            margin-bottom: 24px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .human-message {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .human-message .message-content {
+            background: linear-gradient(135deg, #6b5b73 0%, #8b7a8a 100%);
+            color: white;
+            max-width: 70%;
+            padding: 16px 20px;
+            border-radius: 20px;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 4px 16px rgba(107, 91, 115, 0.25);
+            font-size: 15px;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        .assistant-message {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .assistant-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8956f 0%, #c4b589 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: 14px;
+            color: white;
+            flex-shrink: 0;
+            margin-top: 2px;
+            box-shadow: 0 3px 12px rgba(168, 149, 111, 0.3);
+        }
+
+        .assistant-message .message-content {
+            background: rgba(255, 255, 255, 0.9);
+            max-width: 70%;
+            padding: 16px 20px;
+            border-radius: 20px;
+            border-bottom-left-radius: 6px;
+            border: 1px solid rgba(209, 196, 184, 0.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            font-size: 15px;
+            line-height: 1.6;
+            color: #5a4a5a;
+            white-space: pre-wrap;
+            font-weight: 300;
+            backdrop-filter: blur(10px);
+        }
+
+        .timestamp {
+            font-size: 11px;
+            color: #a8956f;
+            margin-left: 12px;
+            text-align: right;
+            font-weight: 300;
+        }
+
+        .assistant-message .timestamp {
+            text-align: left;
+            margin-left: 46px;
+            margin-top: 10px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .typing-content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 16px 20px;
+            border-radius: 20px;
+            border-bottom-left-radius: 6px;
+            border: 1px solid rgba(209, 196, 184, 0.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #a8956f;
+            border-radius: 50%;
+            animation: typingBounce 1.4s ease-in-out infinite both;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0s;
+        }
+
+        @keyframes typingBounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .input-area {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(209, 196, 184, 0.3);
+            padding: 20px 24px;
+            flex-shrink: 0;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: 48px;
+            max-height: 120px;
+            padding: 14px 56px 14px 18px;
+            border: 1.5px solid rgba(209, 196, 184, 0.4);
+            border-radius: 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.4;
+            resize: none;
+            outline: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .text-input:focus {
+            border-color: #c4b589;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 3px rgba(196, 181, 137, 0.15);
+        }
+
+        .text-input::placeholder {
+            color: #a8956f;
+            font-weight: 300;
+        }
+
+        .send-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: linear-gradient(135deg, #6b5b73 0%, #8b7a8a 100%);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            opacity: 0.7;
+            box-shadow: 0 2px 8px rgba(107, 91, 115, 0.3);
+        }
+
+        .send-btn:hover {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.05);
+            background: linear-gradient(135deg, #8a7a8a 0%, #a294a2 100%);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .voice-btn {
+            width: 48px;
+            height: 48px;
+            border: 1.5px solid rgba(209, 196, 184, 0.4);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .voice-btn:hover {
+            border-color: #c4b589;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 3px rgba(196, 181, 137, 0.2);
+        }
+
+        .voice-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .voice-btn.recording {
+            background: linear-gradient(135deg, #d67676 0%, #e89393 100%);
+            border-color: #d67676;
+            color: white;
+            animation: recordingPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes recordingPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(214, 118, 118, 0.4);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 6px rgba(214, 118, 118, 0);
+            }
+        }
+
+        .welcome-area {
+            text-align: center;
+            padding: 80px 24px;
+            color: #8a7a5a;
+        }
+
+        .welcome-area h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: #6b5b73;
+            margin-bottom: 16px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .welcome-area p {
+            font-size: 16px;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 640px) {
+            .input-area {
+                padding: 16px;
+            }
+
+            .chat-area {
+                padding: 20px;
+            }
+
+            .human-message .message-content {
+                background: linear-gradient(135deg, #6b5b73 0%, #8b7a8a 100%);
+                color: white;
+                max-width: 70%;
+                padding: 16px 20px;
+                border-radius: 20px;
+                border-bottom-right-radius: 6px;
+                box-shadow: 0 4px 16px rgba(107, 91, 115, 0.25);
+                font-size: 15px;
+                line-height: 1.5;
+                font-weight: 300;
+                margin-bottom: 4px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .welcome-area h2 {
+                font-size: 28px;
+            }
+        }
+
+        /* --- NEW CSS FOR RESULT CARDS --- */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .result-card {
+            border: 1px solid rgba(209, 196, 184, 0.4);
+            border-radius: 12px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .result-card.selected {
+            border-color: #a8956f;
+            box-shadow: 0 0 0 3px rgba(196, 181, 137, 0.15);
+        }
+
+        .result-card h4 {
+            font-family: 'Playfair Display', serif;
+            color: #6b5b73;
+            margin: 0 0 8px 0;
+            font-weight: 500;
+        }
+
+        .select-btn {
+            padding: 8px 16px;
+            border-radius: 16px;
+            border: 1.5px solid #a8956f;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            background: rgba(168, 149, 111, 0.1);
+            color: #6b5b73;
+            margin-top: 10px;
+        }
+
+        .select-btn:hover {
+            background: #a8956f;
+            color: white;
+        }
+
+        .select-btn:disabled {
+            background: #c4b589;
+            color: white;
+            cursor: not-allowed;
+            border-color: #c4b589;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1><span class="header-icon">✦</span> Luna</h1>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-area" id="chat-area">
+            <div class="welcome-area" id="welcome-area">
+                <h2>Hello, I'm Luna</h2>
+                <p>Your scheduling AI assistant. How may I help you today?</p>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea id="text-input" class="text-input" placeholder="Tell me about your schedule..."
+                        rows="1"></textarea>
+                    <button id="send-btn" class="send-btn" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="m22 2-7 20-4-9-9-4 20-7z" />
+                        </svg>
+                    </button>
+                </div>
+                <button id="voice-btn" class="voice-btn"
+                    onclick="alert('Voice input not implemented in this version.');">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M3 12h3l3-8 6 16 3-8h3" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+ <script>
+    // ==============================================================================
+    //  MAIN CHAT MANAGER SCRIPT (COMPLETE AND CORRECTED)
+    // ==============================================================================
+    const chatArea = document.getElementById('chat-area');
+    const welcomeArea = document.getElementById('welcome-area');
+    const textInput = document.getElementById('text-input');
+    const sendBtn = document.getElementById('send-btn');
+    let isFirstMessage = true;
+
+    // --- State Management Variables ---
+    let conversationState = 'IDLE';
+    let pendingEventData = null;
+    let missingInfoType = null;
+    let lastBackendResponse = null;
+    let selectedModelId = null;
+
+    // --- Event Listeners (Corrected) ---
+    textInput.addEventListener('input', () => {
+        textInput.style.height = 'auto';
+        textInput.style.height = Math.min(textInput.scrollHeight, 120) + 'px';
+        sendBtn.disabled = !textInput.value.trim();
+    });
+    textInput.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+    sendBtn.addEventListener('click', sendMessage);
+
+    async function sendMessage() {
+        const message = textInput.value.trim();
+        if (!message) return;
+        addMessage(message, 'human');
+        const originalMessage = textInput.value;
+        textInput.value = ''; textInput.style.height = 'auto'; sendBtn.disabled = true;
+
+        if (conversationState === 'WAITING_FOR_INFO') {
+            // --- DELEGATION ---
+            if (selectedModelId === 'xp_model') {
+                await xp_handleMissingInfoResponse(originalMessage, missingInfoType, pendingEventData);
+            }
+            // Teammates will add their own else if blocks here
+        } else {
+            showTypingIndicator();
+            await processTextWithBackend(originalMessage);
+        }
+    }
+
+    // --- MISSING FUNCTION ADDED ---
+    async function processTextWithBackend(text) {
+        try {
+            const response = await fetch('/process-text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
+            if (!response.ok) { throw new Error(`Server responded with status: ${response.status}`); }
+            const data = await response.json();
+            lastBackendResponse = data; // Store the full response
+            hideTypingIndicator();
+            displayCombinedResults(data); // Call the function to display cards
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
+    // --- MISSING FUNCTION ADDED ---
+    function displayCombinedResults(data) {
+        let resultsHtml = `I've analyzed the request. Please choose the best interpretation:<br><br><div id="results-container" class="results-container">`;
+        const models = [{ id: 'xp_model', name: "XP's CRF Model" }, { id: 'teammate_A_model', name: "Teammate A's Model" }, { id: 'teammate_B_model', name: "Teammate B's Model" }];
+        models.forEach(model => {
+            const result = data[model.id];
+            resultsHtml += `<div class="result-card" id="card-${model.id}"><h4>${model.name}</h4>`;
+            if (result.error) {
+                resultsHtml += `<span style="color: #d67676;">Error: ${result.error}</span>`;
+            } else if (result.structured_data) {
+                const d = result.structured_data;
+                resultsHtml += `<b>Event:</b> ${d.event_title || '<i>(missing)</i>'}<br><b>Date:</b> ${d.date || '<i>(missing)</i>'}<br><b>Time:</b> ${d.time || '<i>(missing)</i>'}<br>`;
+                resultsHtml += `<button class="select-btn" onclick="handleSelection('${model.id}')">✔ Select this one</button>`;
+            } else {
+                resultsHtml += "No structured data found.";
+            }
+            resultsHtml += `</div>`;
+        });
+        resultsHtml += `</div><div class="confirmation-buttons"><button class="confirm-btn no" onclick="handleSelection('cancel')">✖ None are correct</button></div>`;
+        addMessage(resultsHtml, 'assistant', true);
+    }
+
+    function handleSelection(modelId) {
+        const allButtons = document.querySelectorAll('.select-btn, .confirm-btn.no');
+        allButtons.forEach(btn => btn.disabled = true);
+        if (modelId === 'cancel') {
+            addMessage("My apologies. Could you please rephrase your request?", 'assistant');
+            resetState();
+            return;
+        }
+        selectedModelId = modelId;
+        const selectedCard = document.getElementById(`card-${modelId}`);
+        if (selectedCard) selectedCard.classList.add('selected');
+        const selectedData = lastBackendResponse[modelId].structured_data;
+        let confirmationMsg = `You selected:<br><br><b>Event:</b> ${selectedData.event_title || '<i>(missing)</i>'}<br><b>Date:</b> ${selectedData.date || '<i>(missing)</i>'}<br><b>Time:</b> ${selectedData.time || '<i>(missing)</i>'}<br>`;
+        addMessage(confirmationMsg, 'assistant', true);
+        // --- DELEGATION ---
+        if (selectedModelId === 'xp_model') {
+            xp_processSelectedData(selectedData);
+        }
+        // Teammates add their logic here
+    }
+
+    // --- All functions below are GENERIC HELPERS used by all handlers ---
+    function askForMissingInfo(type, question, data) {
+        conversationState = 'WAITING_FOR_INFO';
+        missingInfoType = type;
+        pendingEventData = data;
+        addMessage(question + " (You can also say 'cancel' to stop.)", 'assistant');
+    }
+
+    function displayFinalConfirmation(data) {
+        let finalHtml = `Perfect! Here are the complete details:<br><br><b>Event:</b> ${data.event_title}<br><b>Date:</b> ${data.date}<br><b>Time:</b> ${data.time}<br><br>Is this correct?<br>`;
+        finalHtml += `<div class="confirmation-buttons"><button class="confirm-btn yes" onclick="finalizeEvent(true)">✔ Yes, save it</button><button class="confirm-btn no" onclick="finalizeEvent(false)">✖ No, cancel</button></div>`;
+        addMessage(finalHtml, 'assistant', true);
+        textInput.disabled = true;
+        textInput.placeholder = "Please confirm or cancel above...";
+        sendBtn.disabled = true;
+    }
+
+    function finalizeEvent(isConfirmed) {
+        const allButtons = document.querySelectorAll('.confirm-btn.yes, .confirm-btn.no');
+        allButtons.forEach(btn => btn.disabled = true);
+        if (isConfirmed) {
+            addMessage("Excellent! I have saved that for you.", 'assistant');
+        } else {
+            addMessage("Okay, I've cancelled this request. How else can I help?", 'assistant');
+        }
+        textInput.disabled = false;
+        textInput.placeholder = "Tell me about your schedule...";
+        textInput.focus();
+        resetState();
+    }
+
+    // --- Duplication Removed ---
+    function resetState() {
+        conversationState = 'IDLE';
+        pendingEventData = null;
+        missingInfoType = null;
+        lastBackendResponse = null;
+        selectedModelId = null;
+    }
+
+    // --- Other UI helper functions ---
+    function addMessage(text, sender, isHtml = false) { const messageDiv = document.createElement('div'); messageDiv.className = `message ${sender}-message`; if (sender === 'human') { messageDiv.innerHTML = `<div class="message-content">${text}</div>`; } else { const contentDiv = document.createElement('div'); contentDiv.className = 'message-content'; if (isHtml) { contentDiv.innerHTML = text; } else { contentDiv.textContent = text; } const avatar = `<div class="assistant-avatar">L</div>`; messageDiv.innerHTML = avatar; messageDiv.appendChild(contentDiv); } chatArea.appendChild(messageDiv); chatArea.scrollTop = chatArea.scrollHeight; }
+    function removeWelcome() { if (isFirstMessage && welcomeArea) { welcomeArea.style.display = 'none'; isFirstMessage = false; } }
+    function showTypingIndicator() { const typingDiv = document.createElement('div'); typingDiv.id = 'typing-indicator'; typingDiv.className = 'message typing-indicator'; typingDiv.innerHTML = `<div class="assistant-avatar">L</div><div class="typing-content"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class.dot"></div></div><span style="color: #a8956f; font-size: 14px; margin-left: 6px; font-weight: 300;">Luna is thinking...</span></div>`; chatArea.appendChild(typingDiv); chatArea.scrollTop = chatArea.scrollHeight; }
+    function hideTypingIndicator() { const indicator = document.getElementById('typing-indicator'); if (indicator) { indicator.remove(); } }
+    function handleError(error) { console.error('Error:', error); hideTypingIndicator(); addMessage('I apologize, there was an error. Please check the console and try again.', 'assistant'); resetState(); }
+    window.addEventListener('load', () => { textInput.focus(); });
+</script>
+</body>
+
+</html>
