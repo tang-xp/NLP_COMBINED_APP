@@ -609,7 +609,7 @@
     // --- MISSING FUNCTION ADDED ---
     function displayCombinedResults(data) {
         let resultsHtml = `I've analyzed the request. Please choose the best interpretation:<br><br><div id="results-container" class="results-container">`;
-        const models = [{ id: 'xp_model', name: "XP's CRF Model" }, { id: 'teammate_A_model', name: "Teammate A's Model" }, { id: 'teammate_B_model', name: "Teammate B's Model" }];
+        const models = [{ id: 'xp_model', name: "CRF Model" }, { id: 'teammate_A_model', name: "Teammate A's Model" }, { id: 'teammate_B_model', name: "Teammate B's Model" }];
         models.forEach(model => {
             const result = data[model.id];
             resultsHtml += `<div class="result-card" id="card-${model.id}"><h4>${model.name}</h4>`;
