@@ -1,91 +1,98 @@
 import re
 from datetime import datetime, timedelta
+import calendar
+
+# Updated helper functions
+def handle_complex_relative_date(text, reference_date):
+    number_words = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'a': 1, 'an': 1}
+    rel_time_patterns = [
+        r'(\d+|' + '|'.join(number_words.keys()) + r')\s+(day|days|week|weeks|month|months)\s+(from\s+now|later)',
+        r'in\s*(\d+|' + '|'.join(number_words.keys()) + r')\s+(day|days|week|weeks|month|months)',
+    ]
+    for pattern in rel_time_patterns:
+        match = re.search(pattern, text)
+        if match:
+            number = number_words.get(match.group(1), int(match.group(1)))
+            unit = match.group(2)
+            if 'day' in unit: return (reference_date + timedelta(days=number)).strftime('%Y-%m-%d')
+            if 'week' in unit: return (reference_date + timedelta(weeks=number)).strftime('%Y-%m-%d')
+            if 'month' in unit:
+                target_date = reference_date.replace(day=1)
+                month = target_date.month + number
+                year = target_date.year
+                while month > 12: month -= 12; year += 1
+                return target_date.replace(year=year, month=month).strftime('%Y-%m-%d')
+    return None
 
 def normalize_temporal_expression(text_span, entity_type, reference_date=None):
     text = text_span.lower().strip()
-    if reference_date is None:
-        reference_date = datetime.now()
-    
-    current_year = reference_date.year
+    reference_date = reference_date or datetime.now()
+    now_date = datetime.now().date()
+    year = reference_date.year
 
-    # --- TIME NORMALIZATION (Unchanged) ---
-    if entity_type == "TIME":
-        if 'noon' in text: return "T12:00"
-        if 'midnight' in text: return "T00:00"
-        if 'morning' in text: return "TMO"
-        if 'afternoon' in text: return "TAF"
-        if 'evening' in text: return "TEV"
-        if 'night' in text or 'tonight' in text: return "TNI"
-        time_match = re.search(r'(\d{1,2})(?::(\d{2}))?\s*(am|pm)?', text)
-        if time_match:
-            hour = int(time_match.group(1))
-            minute = int(time_match.group(2)) if time_match.group(2) else 0
-            ampm = time_match.group(3)
-            if ampm:
-                if ampm == 'pm' and hour < 12: hour += 12
-                elif ampm == 'am' and hour == 12: hour = 0
-            return f"T{hour:02d}:{minute:02d}"
+    if entity_type == "DATE":
+        # Handle relative dates
+        if 'today' in text: return reference_date.strftime('%Y-%m-%d')
+        if 'tomorrow' in text: return (reference_date + timedelta(days=1)).strftime('%Y-%m-%d')
+        if 'yesterday' in text: return (reference_date - timedelta(days=1)).strftime('%Y-%m-%d')
+        if 'next week' in text: return (reference_date + timedelta(weeks=1)).strftime('%Y-%m-%d')
+        if 'next month' in text:
+            month = reference_date.month % 12 + 1
+            year = reference_date.year + (reference_date.month == 12)
+            return reference_date.replace(year=year, month=month, day=1).strftime('%Y-%m-%d')
         
-    # --- DATE NORMALIZATION (Complete Logic) ---
-    elif entity_type == "DATE":
-        # Check for an explicit year, otherwise default to the current year
-        year_match = re.search(r'\b(\d{4})\b', text)
-        year_to_use = int(year_match.group(1)) if year_match else current_year
+        # Handle weekday normalization
+        days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        for i, day_name in enumerate(days):
+            if day_name in text:
+                current_weekday = reference_date.weekday()
+                days_ahead = (i - current_weekday + 7) % 7
+                target_date = reference_date + timedelta(days=days_ahead)
+                return target_date.strftime('%Y-%m-%d')
 
-        # Rule 1: Handle specific formats like "11/9", "9th sept", "11 September"
-        day_month_match = re.search(r'(\d{1,2})(?:st|nd|rd|th)?\s*[\/\-\s]\s*(\d{1,2}|jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)', text, re.IGNORECASE)
-        if day_month_match:
-            day = int(day_month_match.group(1))
-            month_str = day_month_match.group(2)
-            month = -1
-            if month_str.isdigit():
-                month = int(month_str)
-            else:
-                months_dict = {'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'aug': 8, 'sep': 9, 'sept': 9, 'oct': 10, 'nov': 11, 'dec': 12}
-                month = months_dict.get(month_str.lower()[:4], -1)
-            if month != -1:
-                return f"{year_to_use}-{month:02d}-{day:02d}"
-
-        # Rule 2: Handle month names that might appear with a day, like "December 25th"
-        months_dict = { 'january': 1, 'february': 2, 'march': 3, 'april': 4, 'may': 5, 'june': 6, 'july': 7, 'august': 8, 'september': 9, 'october': 10, 'november': 11, 'december': 12 }
-        for month_name, month_num in months_dict.items():
-            if month_name in text:
-                day_match = re.search(r'(\d{1,2})(?:st|nd|rd|th)?', text)
-                if day_match:
-                    day_num = int(day_match.group(1))
-                    return f"{year_to_use}-{month_num:02d}-{day_num:02d}"
-                else:
-                    # Handle just "September"
-                    return f"{year_to_use}-{month_num:02d}"
-
-        # Rule 3: Handle relative expressions like "next week", "tomorrow"
-        if 'next' in text:
-            if 'week' in text: return (reference_date + timedelta(weeks=1)).strftime('%Y-%m-%d')
-            # ... etc.
-        if 'last' in text:
-            if 'week' in text: return (reference_date - timedelta(weeks=1)).strftime('%Y-%m-%d')
-            # ... etc.
-        if text == 'tomorrow': return (reference_date + timedelta(days=1)).strftime('%Y-%m-%d')
-        if text == 'yesterday': return (reference_date - timedelta(days=1)).strftime('%Y-%m-%d')
-        if text == 'today' or 'tonight' in text: return reference_date.strftime('%Y-%m-%d')
-
-        # Rule 4: Handle standalone days of the week, like "Friday"
-        days_of_week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-        for i, day in enumerate(days_of_week):
-            if day in text:
-                days_until = (i - reference_date.weekday() + 7) % 7
-                if days_until == 0: days_until = 7 # Assume next week's instance
-                return (reference_date + timedelta(days=days_until)).strftime('%Y-%m-%d')
-
-        # Rule 5: Handle fully qualified numeric dates (restored from original)
-        date_patterns = [
-            (r'(\d{1,2})/(\d{1,2})/(\d{4})', lambda m: f"{m.group(3)}-{m.group(1):0>2}-{m.group(2):0>2}"),
-            (r'(\d{4})-(\d{1,2})-(\d{1,2})', lambda m: f"{m.group(1)}-{m.group(2):0>2}-{m.group(3):0>2}"),
-        ]
+        # Handle explicit date formats
+        date_patterns = [(r'(\d{4})-(\d{1,2})-(\d{1,2})', lambda m: f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}")]
         for pattern, formatter in date_patterns:
-            match = re.search(pattern, text)
-            if match:
-                return formatter(match)
+            if re.search(pattern, text): return formatter(re.search(pattern, text))
+            
+        return handle_complex_relative_date(text, reference_date)
 
-    # If no rule matches, return the original text
+    elif entity_type == "TIME":
+        # Handle duration patterns like "in x hours"
+        duration_match = re.search(r'in\s*(a|\d+)\s*(hour|hours|minute|minutes)', text)
+        if duration_match:
+            number = 1 if duration_match.group(1) == 'a' else int(duration_match.group(1))
+            unit = duration_match.group(2)
+            if 'hour' in unit: future_time = reference_date + timedelta(hours=number)
+            else: future_time = reference_date + timedelta(minutes=number)
+            if future_time.date() > now_date: return future_time.strftime("%Y-%m-%dT%H:%M")
+            return future_time.strftime("T%H:%M")
+
+        # Handle named times
+        named_times = {'noon': 'T12:00', 'midnight': 'T00:00', 'morning': 'T09:00', 'afternoon': 'T15:00', 'evening': 'T18:00', 'tonight': 'T20:00'}
+        for name, time in named_times.items():
+            if name in text: return time
+        
+        # Handle explicit times
+        time_match = re.search(r'(\d{1,2})[:.]?(\d{2})?\s*(am|pm)?', text)
+        if time_match:
+            h = int(time_match.group(1))
+            m = int(time_match.group(2)) if time_match.group(2) else 0
+            ap = time_match.group(3)
+            if ap and ap.lower() == 'pm' and h < 12: h += 12
+            if ap and ap.lower() == 'am' and h == 12: h = 0
+            return f"T{h:02d}:{m:02d}"
+
+    elif entity_type == "DATE_TIME":
+        parts = text.split()
+        date_part = ' '.join(p for p in parts if p in ['today', 'tomorrow', 'yesterday'] or any(d in p for d in ['mon', 'tues', 'wednes', 'thurs', 'fri', 'satur', 'sun']))
+        time_part = text.replace(date_part, '').strip()
+
+        normalized_date = normalize_temporal_expression(date_part, "DATE", reference_date) if date_part else None
+        normalized_time = normalize_temporal_expression(time_part, "TIME", reference_date) if time_part else None
+        
+        if normalized_date and normalized_time: return f"{normalized_date}{normalized_time}"
+        if normalized_date: return normalized_date
+        if normalized_time: return normalized_time
+    
     return text_span

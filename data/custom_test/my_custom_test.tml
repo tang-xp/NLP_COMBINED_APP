@@ -8,113 +8,166 @@ Our <EVENT class="OCCURRENCE" eid="e2">strategy session</EVENT> is <TIMEX3 tid="
 Set up a <EVENT class="OCCURRENCE" eid="e3">coffee chat</EVENT> for <TIMEX3 tid="t5" type="TIME" value="T15:00">3 PM</TIMEX3>.
 The <EVENT class="OCCURRENCE" eid="e4">mid-year review</EVENT> is <TIMEX3 tid="t6" type="DATE" value="XXXX-06-30">June 30</TIMEX3>.
 Please <EVENT class="OCCURRENCE" eid="e5">reserve</EVENT> the room <TIMEX3 tid="t7" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3> from <TIMEX3 tid="t8" type="TIME" value="T13:00">1 PM</TIMEX3> to <TIMEX3 tid="t9" type="TIME" value="T14:00">2 PM</TIMEX3>.
-I want to <EVENT class="OCCURRENCE" eid="e6">finalize</EVENT> the <EVENT class="OCCURRENCE" eid="e7">agenda</EVENT> before <TIMEX3 tid="t10" type="DATE" value="PRESENT_REF">today</TIMEX3> ends.
-The <EVENT class="OCCURRENCE" eid="e8">guest lecture</EVENT> is <TIMEX3 tid="t11" type="DATE" value="XXXX-11-15">November 15th</TIMEX3>.
-Let's <EVENT class="OCCURRENCE" eid="e9">organize</EVENT> the <EVENT class="OCCURRENCE" eid="e10">hackathon</EVENT> in <TIMEX3 tid="t12" type="DATE" value="XXXX-12">December</TIMEX3>.
-There's a <EVENT class="OCCURRENCE" eid="e11">training</EVENT> scheduled at <TIMEX3 tid="t13" type="TIME" value="T19:00">7 PM</TIMEX3> <TIMEX3 tid="t14" type="DATE" value="PRESENT_REF">tonight</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e12">closing ceremony</EVENT> will take place on <TIMEX3 tid="t15" type="DATE" value="XXXX-08-31">August 31st</TIMEX3>.
-Schedule John for the <EVENT class="OCCURRENCE" eid="e13">interview</EVENT> on <TIMEX3 tid="t17" type="DATE" value="2025-09-03">Tuesday</TIMEX3>.
-April <EVENT class="OCCURRENCE" eid="e14">explained</EVENT> the project update during <TIMEX3 tid="t18" type="DATE" value="2025-05">May</TIMEX3>.
-Sarah's <EVENT class="OCCURRENCE" eid="e15">presentation</EVENT> will start at <TIMEX3 tid="t19" type="TIME" value="T09:00">9 AM</TIMEX3> <TIMEX3 tid="t20" type="DATE" value="2025-09-02">tomorrow</TIMEX3>.
-Kevin and Rachel <EVENT class="OCCURRENCE" eid="e16">discussed</EVENT> the design review on <TIMEX3 tid="t21" type="DATE" value="2025-09-01">September 1st, 2025</TIMEX3>.
-May is <EVENT class="OCCURRENCE" eid="e17">preparing</EVENT> for the budget meeting scheduled on <TIMEX3 tid="t22" type="DATE" value="2025-06-10">June 10, 2025</TIMEX3>.
-Tom's <EVENT class="OCCURRENCE" eid="e18">training workshop</EVENT> will run from <TIMEX3 tid="t23" type="TIME" value="T13:00">1 PM</TIMEX3> to <TIMEX3 tid="t24" type="TIME" value="T16:00">4 PM</TIMEX3>.
-Jessica and David <EVENT class="OCCURRENCE" eid="e19">scheduled</EVENT> the client presentation for <TIMEX3 tid="t25" type="DATE" value="2025-09-02">tomorrow</TIMEX3> at <TIMEX3 tid="t26" type="TIME" value="T10:30">10:30 AM</TIMEX3>.
-June <EVENT class="OCCURRENCE" eid="e20">mentioned</EVENT> that Emma's deadline is before <TIMEX3 tid="t27" type="DATE" value="2025-09-06">Friday</TIMEX3>.
-Mark <EVENT class="OCCURRENCE" eid="e21">confirmed</EVENT> that the team building session will take place after <TIMEX3 tid="t28" type="TIME" value="T15:00">3 PM</TIMEX3>.
-Chris and Amanda <EVENT class="OCCURRENCE" eid="e22">organized</EVENT> the quarterly review in <TIMEX3 tid="t29" type="DATE" value="2025-03">March 2025</TIMEX3>, but Peter's follow-up meeting is set for <TIMEX3 tid="t30" type="DATE" value="2025-04">April 2025</TIMEX3>.
-The important <EVENT class="OCCURRENCE" eid="e23">meeting</EVENT> will take place on <TIMEX3 tid="t31" type="DATE" value="2025-09-04">Wednesday</TIMEX3>.
-Sarah <EVENT class="OCCURRENCE" eid="e24">prepared</EVENT> for the final review scheduled at <TIMEX3 tid="t32" type="TIME" value="T14:00">2 PM</TIMEX3>.
-The quarterly budget review <EVENT class="OCCURRENCE" eid="e25">meeting</EVENT> will be held in <TIMEX3 tid="t33" type="DATE" value="2025-10">October 2025</TIMEX3>.
-The urgent project <EVENT class="OCCURRENCE" eid="e26">deadline</EVENT> is before <TIMEX3 tid="t34" type="DATE" value="2025-09-06">Friday</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e27">meeting</EVENT>, scheduled for <TIMEX3 tid="t35" type="DATE" value="2025-09-03">Tuesday</TIMEX3>, was <EVENT class="OCCURRENCE" eid="e28">cancelled</EVENT>.
-John is <EVENT class="OCCURRENCE" eid="e29">preparing</EVENT> a comprehensive project status presentation for <TIMEX3 tid="t36" type="DATE" value="2025-09-15">September 15th, 2025</TIMEX3>.
-The extended technical workshop on cloud security will <EVENT class="OCCURRENCE" eid="e30
-">run</EVENT> from <TIMEX3 tid="t37" type="TIME" value="T09:00">9 AM</TIMEX3> to <TIMEX3 tid="t38" type="TIME" value="T17:00">5 PM</TIMEX3>.
-The board strategy planning <EVENT class="OCCURRENCE" eid="e31">session</EVENT> has been moved to <TIMEX3 tid="t39" type="DATE" value="2025-09-02">Monday</TIMEX3>.
+I want to <EVENT class="OCCURRENCE" eid="e10">finalize</EVENT> the <EVENT class="OCCURRENCE" eid="e11">agenda</EVENT> before <TIMEX3 tid="t10" type="DATE" value="PRESENT_REF">today</TIMEX3> ends.
+The <EVENT class="OCCURRENCE" eid="e12">guest lecture</EVENT> is <TIMEX3 tid="t11" type="DATE" value="XXXX-11-15">November 15th</TIMEX3>.
+Let's <EVENT class="OCCURRENCE" eid="e13">organize</EVENT> the <EVENT class="OCCURRENCE" eid="e14">hackathon</EVENT> in <TIMEX3 tid="t12" type="DATE" value="XXXX-12">December</TIMEX3>.
+There's a <EVENT class="OCCURRENCE" eid="e15">training</EVENT> scheduled at <TIMEX3 tid="t13" type="TIME" value="T19:00">7 PM</TIMEX3> <TIMEX3 tid="t14" type="DATE" value="PRESENT_REF">tonight</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e16">closing ceremony</EVENT> will take place on <TIMEX3 tid="t15" type="DATE" value="XXXX-08-31">August 31st</TIMEX3>.
+Schedule John for the <EVENT class="OCCURRENCE" eid="e17">interview</EVENT> on <TIMEX3 tid="t17" type="DATE" value="2025-09-03">Tuesday</TIMEX3>.
+April <EVENT class="OCCURRENCE" eid="e18">explained</EVENT> the project update during <TIMEX3 tid="t18" type="DATE" value="2025-05">May</TIMEX3>.
+Sarah's <EVENT class="OCCURRENCE" eid="e19">presentation</EVENT> will start at <TIMEX3 tid="t19" type="TIME" value="T09:00">9 AM</TIMEX3> <TIMEX3 tid="t20" type="DATE" value="2025-09-02">tomorrow</TIMEX3>.
+Kevin and Rachel <EVENT class="OCCURRENCE" eid="e20">discussed</EVENT> the design review on <TIMEX3 tid="t21" type="DATE" value="2025-09-01">September 1st, 2025</TIMEX3>.
+May is <EVENT class="OCCURRENCE" eid="e21">preparing</EVENT> for the budget meeting scheduled on <TIMEX3 tid="t22" type="DATE" value="2025-06-10">June 10, 2025</TIMEX3>.
+Tom's <EVENT class="OCCURRENCE" eid="e22">training workshop</EVENT> will run from <TIMEX3 tid="t23" type="TIME" value="T13:00">1 PM</TIMEX3> to <TIMEX3 tid="t24" type="TIME" value="T16:00">4 PM</TIMEX3>.
+Jessica and David <EVENT class="OCCURRENCE" eid="e23">scheduled</EVENT> the client presentation for <TIMEX3 tid="t25" type="DATE" value="2025-09-02">tomorrow</TIMEX3> at <TIMEX3 tid="t26" type="TIME" value="T10:30">10:30 AM</TIMEX3>.
+June <EVENT class="OCCURRENCE" eid="e24">mentioned</EVENT> that Emma's deadline is before <TIMEX3 tid="t27" type="DATE" value="2025-09-06">Friday</TIMEX3>.
+Mark <EVENT class="OCCURRENCE" eid="e25">confirmed</EVENT> that the team building session will take place after <TIMEX3 tid="t28" type="TIME" value="T15:00">3 PM</TIMEX3>.
+Chris and Amanda <EVENT class="OCCURRENCE" eid="e26">organized</EVENT> the quarterly review in <TIMEX3 tid="t29" type="DATE" value="2025-03">March 2025</TIMEX3>, but Peter's follow-up meeting is set for <TIMEX3 tid="t30" type="DATE" value="2025-04">April 2025</TIMEX3>.
+The important <EVENT class="OCCURRENCE" eid="e27">meeting</EVENT> will take place on <TIMEX3 tid="t31" type="DATE" value="2025-09-04">Wednesday</TIMEX3>.
+Sarah <EVENT class="OCCURRENCE" eid="e28">prepared</EVENT> for the final review scheduled at <TIMEX3 tid="t32" type="TIME" value="T14:00">2 PM</TIMEX3>.
+The quarterly budget review <EVENT class="OCCURRENCE" eid="e29">meeting</EVENT> will be held in <TIMEX3 tid="t33" type="DATE" value="2025-10">October 2025</TIMEX3>.
+The urgent project <EVENT class="OCCURRENCE" eid="e30">deadline</EVENT> is before <TIMEX3 tid="t34" type="DATE" value="2025-09-06">Friday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e31">meeting</EVENT>, scheduled for <TIMEX3 tid="t35" type="DATE" value="2025-09-03">Tuesday</TIMEX3>, was <EVENT class="OCCURRENCE" eid="e32">cancelled</EVENT>.
+John is <EVENT class="OCCURRENCE" eid="e33">preparing</EVENT> a comprehensive project status presentation for <TIMEX3 tid="t36" type="DATE" value="2025-09-15">September 15th, 2025</TIMEX3>.
+The extended technical workshop on cloud security will <EVENT class="OCCURRENCE" eid="e34">run</EVENT> from <TIMEX3 tid="t37" type="TIME" value="T09:00">9 AM</TIMEX3> to <TIMEX3 tid="t38" type="TIME" value="T17:00">5 PM</TIMEX3>.
+The board strategy planning <EVENT class="OCCURRENCE" eid="e35">session</EVENT> has been moved to <TIMEX3 tid="t39" type="DATE" value="2025-09-02">Monday</TIMEX3>.
 
-The <EVENT class="OCCURRENCE" eid="e32">team meeting</EVENT> is scheduled for <TIMEX3 tid="t40" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3> <TIMEX3 tid="t41" type="TIME" value="TMO">morning</TIMEX3>.
-We will start the <EVENT class="OCCURRENCE" eid="e33">client presentation</EVENT> on <TIMEX3 tid="t42" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3> <TIMEX3 tid="t43" type="TIME" value="TEV">evening</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e34">budget review</EVENT> will begin in <TIMEX3 tid="t44" type="DURATION" value="PT2H">2 hours</TIMEX3>.
-She submitted the <EVENT class="OCCURRENCE" eid="e35">final report</EVENT> <TIMEX3 tid="t45" type="DURATION" value="P3D">3 days</TIMEX3> ago.
-The <EVENT class="OCCURRENCE" eid="e36">status update call</EVENT> was held <TIMEX3 tid="t46" type="TIME" value="TMO">this morning</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e37">lecture</EVENT> is scheduled for <TIMEX3 tid="t47" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3> at <TIMEX3 tid="t48" type="TIME" value="T15:00">3 PM</TIMEX3> <TIMEX3 tid="t49" type="TIME" value="TAF">in the afternoon</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e38">training workshop</EVENT> has been postponed until <TIMEX3 tid="t50" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3> <TIMEX3 tid="t51" type="TIME" value="TNI">night</TIMEX3>.
-Can John join the <EVENT class="OCCURRENCE" eid="e39">team sync</EVENT> on <TIMEX3 tid="t52" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>?
-The <EVENT class="OCCURRENCE" eid="e40">audit</EVENT> will be held in Paris on <TIMEX3 tid="t53" type="DATE" value="XXXX-03-15">March 15th</TIMEX3>.
-Remember your <EVENT class="OCCURRENCE" eid="e41">appointment</EVENT> at <TIMEX3 tid="t54" type="TIME" value="T14:00">2 PM</TIMEX3>.
-Sarah scheduled the <EVENT class="OCCURRENCE" eid="e42">presentation</EVENT> for <TIMEX3 tid="t55" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3> at <TIMEX3 tid="t56" type="TIME" value="T10:00">10 AM</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e36">team meeting</EVENT> is scheduled for <TIMEX3 tid="t40" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3> <TIMEX3 tid="t41" type="TIME" value="TMO">morning</TIMEX3>.
+We will start the <EVENT class="OCCURRENCE" eid="e37">client presentation</EVENT> on <TIMEX3 tid="t42" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3> <TIMEX3 tid="t43" type="TIME" value="TEV">evening</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e38">budget review</EVENT> will begin in <TIMEX3 tid="t44" type="DURATION" value="PT2H">2 hours</TIMEX3>.
+She submitted the <EVENT class="OCCURRENCE" eid="e39">final report</EVENT> <TIMEX3 tid="t45" type="DURATION" value="P3D">3 days</TIMEX3> ago.
+The <EVENT class="OCCURRENCE" eid="e40">status update call</EVENT> was held <TIMEX3 tid="t46" type="TIME" value="TMO">this morning</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e41">lecture</EVENT> is scheduled for <TIMEX3 tid="t47" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3> at <TIMEX3 tid="t48" type="TIME" value="T15:00">3 PM</TIMEX3> <TIMEX3 tid="t49" type="TIME" value="TAF">in the afternoon</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e42">training workshop</EVENT> has been postponed until <TIMEX3 tid="t50" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3> <TIMEX3 tid="t51" type="TIME" value="TNI">night</TIMEX3>.
+Can John join the <EVENT class="OCCURRENCE" eid="e43">team sync</EVENT> on <TIMEX3 tid="t52" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>?
+The <EVENT class="OCCURRENCE" eid="e44">audit</EVENT> will be held in Paris on <TIMEX3 tid="t53" type="DATE" value="XXXX-03-15">March 15th</TIMEX3>.
+Remember your <EVENT class="OCCURRENCE" eid="e45">appointment</EVENT> at <TIMEX3 tid="t54" type="TIME" value="T14:00">2 PM</TIMEX3>.
+Sarah scheduled the <EVENT class="OCCURRENCE" eid="e46">presentation</EVENT> for <TIMEX3 tid="t55" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3> at <TIMEX3 tid="t56" type="TIME" value="T10:00">10 AM</TIMEX3>.
 The flight to London departs <TIMEX3 tid="t57" type="DATE" value="PRESENT_REF">tomorrow</TIMEX3> at <TIMEX3 tid="t58" type="TIME" value="T09:00">9 AM</TIMEX3>.
-David will lead the <EVENT class="OCCURRENCE" eid="e43">workshop</EVENT> on <TIMEX3 tid="t59" type="DATE" value="XXXX-06-20">June 20th</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e44">call</EVENT> with Maria is set for <TIMEX3 tid="t60" type="TIME" value="T18:00">6 PM</TIMEX3> <TIMEX3 tid="t61" type="DATE" value="PRESENT_REF">today</TIMEX3>.
-Please confirm your <EVENT class="OCCURRENCE" eid="e45">attendance</EVENT> by <TIMEX3 tid="t62" type="DATE" value="XXXX-09-05">September 5th</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e46">team meeting</EVENT> will happen in New York at <TIMEX3 tid="t63" type="TIME" value="T11:30">11:30 AM</TIMEX3> on <TIMEX3 tid="t64" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3>.
-Anna's <EVENT class="OCCURRENCE" eid="e47">conference</EVENT> is scheduled for <TIMEX3 tid="t65" type="DATE" value="XXXX-10">October</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e48">session</EVENT> begins <TIMEX3 tid="t66" type="TIME" value="T08:00">8 AM</TIMEX3> sharp <TIMEX3 tid="t67" type="DATE" value="PRESENT_REF">tomorrow</TIMEX3>.
-Michael postponed the <EVENT class="OCCURRENCE" eid="e49">audit</EVENT> until <TIMEX3 tid="t68" type="DATE" value="XXXX-12-01">December 1st</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e50">briefing</EVENT> will take place at <TIMEX3 tid="t69" type="TIME" value="T16:30">4:30 PM</TIMEX3> in Berlin.
-Our <EVENT class="OCCURRENCE" eid="e51">workshop</EVENT> falls on <TIMEX3 tid="t70" type="DATE" value="XXXX-WXX-7">Sunday</TIMEX3> morning.
-Emily confirmed the <EVENT class="OCCURRENCE" eid="e52">appointment</EVENT> at <TIMEX3 tid="t71" type="TIME" value="T20:00">8 PM</TIMEX3> <TIMEX3 tid="t72" type="DATE" value="PRESENT_REF">tonight</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e53">review session</EVENT> is scheduled for <TIMEX3 tid="t73" type="DATE" value="XXXX-WXX-3">Wednesday</TIMEX3>.
-James will attend the <EVENT class="OCCURRENCE" eid="e54">meeting</EVENT> at <TIMEX3 tid="t74" type="TIME" value="T15:30">3:30 PM</TIMEX3> <TIMEX3 tid="t75" type="DATE" value="PRESENT_REF">tomorrow</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e55">seminar</EVENT> takes place in Madrid in <TIMEX3 tid="t76" type="DATE" value="XXXX-11">November</TIMEX3>.
-We will hold the <EVENT class="OCCURRENCE" eid="e56">planning session</EVENT> on <TIMEX3 tid="t77" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3> afternoon.
-Rachel’s <EVENT class="OCCURRENCE" eid="e57">presentation</EVENT> begins at <TIMEX3 tid="t78" type="TIME" value="T13:00">1 PM</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e58">lunch</EVENT> is planned for <TIMEX3 tid="t79" type="TIME" value="T12:00">noon</TIMEX3> on <TIMEX3 tid="t80" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
-George will attend the <EVENT class="OCCURRENCE" eid="e59">annual meeting</EVENT> in Rome this <TIMEX3 tid="t81" type="DATE" value="XXXX-07">July</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e60">audit</EVENT> is set for <TIMEX3 tid="t82" type="TIME" value="T00:00">midnight</TIMEX3> on <TIMEX3 tid="t83" type="DATE" value="XXXX-09-01">September 1st</TIMEX3>.
-Olivia asked about the <EVENT class="OCCURRENCE" eid="e61">conference</EVENT> scheduled in Tokyo next <TIMEX3 tid="t84" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e62">closing session</EVENT> will end at <TIMEX3 tid="t85" type="TIME" value="T22:00">10 PM</TIMEX3>.
-Sophia postponed the <EVENT class="OCCURRENCE" eid="e63">report submission</EVENT> until <TIMEX3 tid="t86" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e64">training</EVENT> is scheduled for <TIMEX3 tid="t87" type="DATE" value="XXXX-WXX-6">Saturday</TIMEX3>.
-Mark rescheduled the <EVENT class="OCCURRENCE" eid="e65">workshop</EVENT> to <TIMEX3 tid="t88" type="DATE" value="XXXX-08-10">August 10th</TIMEX3> at <TIMEX3 tid="t89" type="TIME" value="T09:30">9:30 AM</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e66">strategy meeting</EVENT> will take place <TIMEX3 tid="t90" type="DATE" value="PRESENT_REF">today</TIMEX3> at <TIMEX3 tid="t91" type="TIME" value="T17:00">5 PM</TIMEX3>.
-Charlotte confirmed her <EVENT class="OCCURRENCE" eid="e67">appointment</EVENT> <TIMEX3 tid="t92" type="DATE" value="PRESENT_REF">yesterday</TIMEX3> afternoon.
-The <EVENT class="OCCURRENCE" eid="e68">closing ceremony</EVENT> will occur on <TIMEX3 tid="t93" type="DATE" value="XXXX-12-31">December 31st</TIMEX3>.
-Henry delayed the <EVENT class="OCCURRENCE" eid="e69">briefing</EVENT> until <TIMEX3 tid="t94" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3> evening.
-The <EVENT class="OCCURRENCE" eid="e70">project review</EVENT> is scheduled at <TIMEX3 tid="t95" type="TIME" value="T07:00">7 AM</TIMEX3> <TIMEX3 tid="t96" type="DATE" value="PRESENT_REF">tomorrow</TIMEX3>.
-Isabella prepared the <EVENT class="OCCURRENCE" eid="e71">monthly report</EVENT> on <TIMEX3 tid="t97" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e72">team lunch</EVENT> will be at <TIMEX3 tid="t98" type="TIME" value="T12:30">12:30 PM</TIMEX3> on <TIMEX3 tid="t99" type="DATE" value="XXXX-WXX-3">Wednesday</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e73">Quick sync</EVENT> at <TIMEX3 tid="t100" type="TIME" value="T15:00">3pm</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e74">audit</EVENT> needs to be done by <TIMEX3 tid="t101" type="DATE" value="NEXT_MONTH">next month</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e75">Client call</EVENT> <TIMEX3 tid="t102" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3> <TIMEX3 tid="t103" type="TIME" value="T11:00">11am</TIMEX3>.
-Let's plan for a <EVENT class="OCCURRENCE" eid="e76">debrief</EVENT> in the <TIMEX3 tid="t104" type="TIME" value="TAF">afternoon</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e77">demo</EVENT> is at <TIMEX3 tid="t105" type="TIME" value="T16:30">4:30 PM</TIMEX3>.
+David will lead the <EVENT class="OCCURRENCE" eid="e47">workshop</EVENT> on <TIMEX3 tid="t59" type="DATE" value="XXXX-06-20">June 20th</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e48">call</EVENT> with Maria is set for <TIMEX3 tid="t60" type="TIME" value="T18:00">6 PM</TIMEX3> <TIMEX3 tid="t61" type="DATE" value="PRESENT_REF">today</TIMEX3>.
+Please confirm your <EVENT class="OCCURRENCE" eid="e49">attendance</EVENT> by <TIMEX3 tid="t62" type="DATE" value="XXXX-09-05">September 5th</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e50">team meeting</EVENT> will happen in New York at <TIMEX3 tid="t63" type="TIME" value="T11:30">11:30 AM</TIMEX3> on <TIMEX3 tid="t64" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3>.
+Anna's <EVENT class="OCCURRENCE" eid="e51">conference</EVENT> is scheduled for <TIMEX3 tid="t65" type="DATE" value="XXXX-10">October</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e52">session</EVENT> begins <TIMEX3 tid="t66" type="TIME" value="T08:00">8 AM</TIMEX3> sharp <TIMEX3 tid="t67" type="DATE" value="PRESENT_REF">tomorrow</TIMEX3>.
+Michael postponed the <EVENT class="OCCURRENCE" eid="e53">audit</EVENT> until <TIMEX3 tid="t68" type="DATE" value="XXXX-12-01">December 1st</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e54">briefing</EVENT> will take place at <TIMEX3 tid="t69" type="TIME" value="T16:30">4:30 PM</TIMEX3> in Berlin.
+Our <EVENT class="OCCURRENCE" eid="e55">workshop</EVENT> falls on <TIMEX3 tid="t70" type="DATE" value="XXXX-WXX-7">Sunday</TIMEX3> morning.
+Emily confirmed the <EVENT class="OCCURRENCE" eid="e56">appointment</EVENT> at <TIMEX3 tid="t71" type="TIME" value="T20:00">8 PM</TIMEX3> <TIMEX3 tid="t72" type="DATE" value="PRESENT_REF">tonight</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e57">review session</EVENT> is scheduled for <TIMEX3 tid="t73" type="DATE" value="XXXX-WXX-3">Wednesday</TIMEX3>.
+James will attend the <EVENT class="OCCURRENCE" eid="e58">meeting</EVENT> at <TIMEX3 tid="t74" type="TIME" value="T15:30">3:30 PM</TIMEX3> <TIMEX3 tid="t75" type="DATE" value="PRESENT_REF">tomorrow</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e59">seminar</EVENT> takes place in Madrid in <TIMEX3 tid="t76" type="DATE" value="XXXX-11">November</TIMEX3>.
+We will hold the <EVENT class="OCCURRENCE" eid="e60">planning session</EVENT> on <TIMEX3 tid="t77" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3> afternoon.
+Rachel’s <EVENT class="OCCURRENCE" eid="e61">presentation</EVENT> begins at <TIMEX3 tid="t78" type="TIME" value="T13:00">1 PM</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e62">lunch</EVENT> is planned for <TIMEX3 tid="t79" type="TIME" value="T12:00">noon</TIMEX3> on <TIMEX3 tid="t80" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
+George will attend the <EVENT class="OCCURRENCE" eid="e63">annual meeting</EVENT> in Rome this <TIMEX3 tid="t81" type="DATE" value="XXXX-07">July</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e64">audit</EVENT> is set for <TIMEX3 tid="t82" type="TIME" value="T00:00">midnight</TIMEX3> on <TIMEX3 tid="t83" type="DATE" value="XXXX-09-01">September 1st</TIMEX3>.
+Olivia asked about the <EVENT class="OCCURRENCE" eid="e65">conference</EVENT> scheduled in Tokyo next <TIMEX3 tid="t84" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e66">closing session</EVENT> will end at <TIMEX3 tid="t85" type="TIME" value="T22:00">10 PM</TIMEX3>.
+Sophia postponed the <EVENT class="OCCURRENCE" eid="e67">report submission</EVENT> until <TIMEX3 tid="t86" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e68">training</EVENT> is scheduled for <TIMEX3 tid="t87" type="DATE" value="XXXX-WXX-6">Saturday</TIMEX3>.
+Mark rescheduled the <EVENT class="OCCURRENCE" eid="e69">workshop</EVENT> to <TIMEX3 tid="t88" type="DATE" value="XXXX-08-10">August 10th</TIMEX3> at <TIMEX3 tid="t89" type="TIME" value="T09:30">9:30 AM</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e70">strategy meeting</EVENT> will take place <TIMEX3 tid="t90" type="DATE" value="PRESENT_REF">today</TIMEX3> at <TIMEX3 tid="t91" type="TIME" value="T17:00">5 PM</TIMEX3>.
+Charlotte confirmed her <EVENT class="OCCURRENCE" eid="e71">appointment</EVENT> <TIMEX3 tid="t92" type="DATE" value="PRESENT_REF">yesterday</TIMEX3> afternoon.
+The <EVENT class="OCCURRENCE" eid="e72">closing ceremony</EVENT> will occur on <TIMEX3 tid="t93" type="DATE" value="XXXX-12-31">December 31st</TIMEX3>.
+Henry delayed the <EVENT class="OCCURRENCE" eid="e73">briefing</EVENT> until <TIMEX3 tid="t94" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3> evening.
+The <EVENT class="OCCURRENCE" eid="e74">project review</EVENT> is scheduled at <TIMEX3 tid="t95" type="TIME" value="T07:00">7 AM</TIMEX3> <TIMEX3 tid="t96" type="DATE" value="PRESENT_REF">tomorrow</TIMEX3>.
+Isabella prepared the <EVENT class="OCCURRENCE" eid="e75">monthly report</EVENT> on <TIMEX3 tid="t97" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e76">team lunch</EVENT> will be at <TIMEX3 tid="t98" type="TIME" value="T12:30">12:30 PM</TIMEX3> on <TIMEX3 tid="t99" type="DATE" value="XXXX-WXX-3">Wednesday</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e77">Quick sync</EVENT> at <TIMEX3 tid="t100" type="TIME" value="T15:00">3pm</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e78">audit</EVENT> needs to be done by <TIMEX3 tid="t101" type="DATE" value="NEXT_MONTH">next month</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e79">Client call</EVENT> <TIMEX3 tid="t102" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3> <TIMEX3 tid="t103" type="TIME" value="T11:00">11am</TIMEX3>.
+Let's plan for a <EVENT class="OCCURRENCE" eid="e80">debrief</EVENT> in the <TIMEX3 tid="t104" type="TIME" value="TAF">afternoon</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e81">demo</EVENT> is at <TIMEX3 tid="t105" type="TIME" value="T16:30">4:30 PM</TIMEX3>.
 
-<EVENT class="OCCURRENCE" eid="e78">Demo</EVENT> at <TIMEX3 tid="t106" type="TIME" value="T16:00">4</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e79">Team dinner</EVENT> <TIMEX3 tid="t107" type="DATE" value="TONIGHT">tonight</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e80">Sprint planning</EVENT> for <TIMEX3 tid="t108" type="DATE" value="TOMORROW">tomorrow</TIMEX3> <TIMEX3 tid="t109" type="TIME" value="TMO">morning</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e81">Interview</EVENT> on <TIMEX3 tid="t110" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e82">Board meeting</EVENT> at <TIMEX3 tid="t111" type="TIME" value="T14:30">2:30pm</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e83">release deadline</EVENT> is <TIMEX3 tid="t112" type="DATE" value="NEXT_WEEK-WXX-5">next Friday</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e82">Demo</EVENT> at <TIMEX3 tid="t106" type="TIME" value="T16:00">4</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e83">Team dinner</EVENT> <TIMEX3 tid="t107" type="DATE" value="TONIGHT">tonight</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e84">Sprint planning</EVENT> for <TIMEX3 tid="t108" type="DATE" value="TOMORROW">tomorrow</TIMEX3> <TIMEX3 tid="t109" type="TIME" value="TMO">morning</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e85">Interview</EVENT> on <TIMEX3 tid="t110" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e86">Board meeting</EVENT> at <TIMEX3 tid="t111" type="TIME" value="T14:30">2:30pm</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e87">release deadline</EVENT> is <TIMEX3 tid="t112" type="DATE" value="NEXT_WEEK-WXX-5">next Friday</TIMEX3>.
 
-The <EVENT class="OCCURRENCE" eid="e84">user testing session</EVENT> is at <TIMEX3 tid="t113" type="TIME" value="T13:00">1pm</TIMEX3>.
-We have a <EVENT class="OCCURRENCE" eid="e85">marketing team sync</EVENT> on <TIMEX3 tid="t114" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e86">security audit debrief</EVENT> is <TIMEX3 tid="t115" type="DATE" value="TOMORROW">tomorrow</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e87">Q3 budget review</EVENT> at <TIMEX3 tid="t116" type="TIME" value="T10:00">10am</TIMEX3>.
-Finalize the <EVENT class="OCCURRENCE" eid="e88">hiring committee meeting</EVENT> schedule.
+<EVENT class="OCCURRENCE" eid="e88">The user testing session</EVENT> is at <TIMEX3 tid="t113" type="TIME" value="T13:00">1pm</TIMEX3>.
+We have a <EVENT class="OCCURRENCE" eid="e89">marketing team sync</EVENT> on <TIMEX3 tid="t114" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e90">security audit debrief</EVENT> is <TIMEX3 tid="t115" type="DATE" value="TOMORROW">tomorrow</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e91">Q3 budget review</EVENT> at <TIMEX3 tid="t116" type="TIME" value="T10:00">10am</TIMEX3>.
+Finalize the <EVENT class="OCCURRENCE" eid="e92">hiring committee meeting</EVENT> schedule.
 
-<EVENT class="OCCURRENCE" eid="e89">Weekly sync</EVENT> is at <TIMEX3 tid="t117" type="TIME" value="T09:00">9am</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e90">Go for a run</EVENT> <TIMEX3 tid="t118" type="DATE" value="TOMORROW">tomorrow</TIMEX3> <TIMEX3 tid="t119" type="TIME" value="TMO">morning</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e91">final deadline</EVENT> is <TIMEX3 tid="t120" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e92">Get groceries</EVENT> this <TIMEX3 tid="t121" type="TIME" value="TEV">evening</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e93">Client meeting</EVENT> on <TIMEX3 tid="t122" type="DATE" value="XXXX-10-31">October 31st</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e94">Final project review</EVENT> with the team <TIMEX3 tid="t123" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
-The <EVENT class="OCCURRENCE" eid="e95">company barbecue</EVENT> is next <TIMEX3 tid="t124" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e96">Kick-off meeting</EVENT> in the <TIMEX3 tid="t125" type="TIME" value="TMO">morning</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e97">Plan the week</EVENT>.
+<EVENT class="OCCURRENCE" eid="e93">Weekly sync</EVENT> is at <TIMEX3 tid="t117" type="TIME" value="T09:00">9am</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e94">Go for a run</EVENT> <TIMEX3 tid="t118" type="DATE" value="TOMORROW">tomorrow</TIMEX3> <TIMEX3 tid="t119" type="TIME" value="TMO">morning</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e95">final deadline</EVENT> is <TIMEX3 tid="t120" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e96">Get groceries</EVENT> this <TIMEX3 tid="t121" type="TIME" value="TEV">evening</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e97">Client meeting</EVENT> on <TIMEX3 tid="t122" type="DATE" value="XXXX-10-31">October 31st</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e98">Final project review</EVENT> with the team <TIMEX3 tid="t123" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e99">company barbecue</EVENT> is next <TIMEX3 tid="t124" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e100">Kick-off meeting</EVENT> in the <TIMEX3 tid="t125" type="TIME" value="TMO">morning</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e101">Plan the week</EVENT>.
 
-<EVENT class="OCCURRENCE" eid="e98">Review</EVENT> with Jane.
-<EVENT class="OCCURRENCE" eid="e99">Code review session</EVENT> with the backend team at <TIMEX3 tid="t126" type="TIME" value="T15:00">3pm</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e100">Meeting</EVENT> with the client.
+<EVENT class="OCCURRENCE" eid="e102">Review with Jane</EVENT>.
+<EVENT class="OCCURRENCE" eid="e103">Code review session</EVENT> with the backend team at <TIMEX3 tid="t126" type="TIME" value="T15:00">3pm</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e104">Meeting with the client</EVENT>.
 
-<EVENT class="OCCURRENCE" eid="e101">The final presentation</EVENT> is on <TIMEX3 tid="t127" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e102">A quick call</EVENT> with marketing.
-<EVENT class="OCCURRENCE" eid="e103">Lunch</EVENT> with my manager.
-
-Can we <EVENT class="OCCURRENCE" eid="e104">book a meeting</EVENT> with David?
-The <EVENT class="OCCURRENCE" eid="e105">company offsite</EVENT> is <TIMEX3 tid="t128" type="DATE" value="NEXT_MONTH">next month</TIMEX3>.
-<EVENT class="OCCURRENCE" eid="e106">Lunch</EVENT> with Sarah and Mike.
+Can we <EVENT class="OCCURRENCE" eid="e105">book a meeting with David</EVENT>?
+The <EVENT class="OCCURRENCE" eid="e106">company offsite</EVENT> is <TIMEX3 tid="t127" type="DATE" value="NEXT_MONTH">next month</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e107">Lunch with Sarah and Mike</EVENT>.
+<EVENT class="OCCURRENCE" eid="e108">Book a flight to London</EVENT> for <TIMEX3 tid="t128" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e109">team huddle</EVENT> is at <TIMEX3 tid="t129" type="TIME" value="T12:00">noon</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e110">User testing session</EVENT> is at <TIMEX3 tid="t130" type="TIME" value="T13:00">1pm</TIMEX3>
+The <EVENT class="OCCURRENCE" eid="e111">marketing team sync</EVENT> is on <TIMEX3 tid="t131" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e112">security audit debrief</EVENT> is <TIMEX3 tid="t132" type="DATE" value="TOMORROW">tomorrow</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e113">Q3 budget review</EVENT> at <TIMEX3 tid="t133" type="TIME" value="T10:00">10am</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e114">Finalize the hiring committee meeting schedule</EVENT>.
+The <EVENT class="OCCURRENCE" eid="e115">weekly sync</EVENT> is at <TIMEX3 tid="t134" type="TIME" value="T09:00">9am</TIMEX3>.
+Let's <EVENT class="OCCURRENCE" eid="e116">go for a run</EVENT> <TIMEX3 tid="t135" type="DATE" value="TOMORROW">tomorrow</TIMEX3> <TIMEX3 tid="t136" type="TIME" value="TMO">morning</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e117">final deadline</EVENT> is <TIMEX3 tid="t137" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e118">Get groceries</EVENT> this <TIMEX3 tid="t138" type="TIME" value="TEV">evening</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e119">Client meeting</EVENT> on <TIMEX3 tid="t139" type="DATE" value="XXXX-10-31">October 31st</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e120">Final project review with the team</EVENT> on <TIMEX3 tid="t140" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e121">company barbecue</EVENT> is next <TIMEX3 tid="t141" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e122">Kick-off meeting</EVENT> in the <TIMEX3 tid="t142" type="TIME" value="TMO">morning</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e123">Plan the week</EVENT>.
+<EVENT class="OCCURRENCE" eid="e124">Review with Jane</EVENT>.
+<EVENT class="OCCURRENCE" eid="e125">Code review session with the backend team</EVENT> at <TIMEX3 tid="t143" type="TIME" value="T15:00">3pm</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e126">Meeting with the client</EVENT>.
+The <EVENT class="OCCURRENCE" eid="e127">final presentation</EVENT> is on <TIMEX3 tid="t144" type="DATE" value="XXXX-WXX-5">Friday</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e128">A quick call with marketing</EVENT>.
+<EVENT class="OCCURRENCE" eid="e129">Lunch with my manager</EVENT>.
+We should <EVENT class="OCCURRENCE" eid="e130">schedule a team dinner</EVENT> for <TIMEX3 tid="t145" type="DATE" value="NEXT_MONTH">next month</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e131">quarterly financial review</EVENT> is scheduled for <TIMEX3 tid="t146" type="DATE" value="XXXX-04">April</TIMEX3>.
+I need to <EVENT class="OCCURRENCE" eid="e132">finish the proposal</EVENT> before <TIMEX3 tid="t147" type="DATE" value="TOMORROW">tomorrow</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e133">product launch</EVENT> is <TIMEX3 tid="t148" type="DATE" value="P3D">three days</TIMEX3> from now.
+Can you <EVENT class="OCCURRENCE" eid="e134">remind me to call a client</EVENT> in <TIMEX3 tid="t149" type="DURATION" value="PT20M">20 minutes</TIMEX3>?
+The <EVENT class="OCCURRENCE" eid="e135">design sprint</EVENT> begins on <TIMEX3 tid="t150" type="DATE" value="NEXT_WEEK-WXX-1">next Monday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e136">yearly audit</EVENT> is in <TIMEX3 tid="t151" type="DURATION" value="P1M">one month</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e137">board meeting</EVENT> has been moved from <TIMEX3 tid="t152" type="DATE" value="XXXX-WXX-1">Monday</TIMEX3> to <TIMEX3 tid="t153" type="DATE" value="XXXX-WXX-3">Wednesday</TIMEX3>.
+I need to <EVENT class="OCCURRENCE" eid="e138">draft the presentation slides</EVENT> by <TIMEX3 tid="t154" type="DATE" value="TOMORROW">tomorrow</TIMEX3> <TIMEX3 tid="t155" type="TIME" value="T12:00">noon</TIMEX3>.
+Let's <EVENT class="OCCURRENCE" eid="e139">review the project status</EVENT> at <TIMEX3 tid="t156" type="TIME" value="T10:00">10am</TIMEX3> in the <TIMEX3 tid="t157" type="TIME" value="TMO">morning</TIMEX3>.
+We need to <EVENT class="OCCURRENCE" eid="e140">submit the budget proposal</EVENT> before <TIMEX3 tid="t158" type="DATE" value="XXXX-09-25">September 25</TIMEX3>.
+Please <EVENT class="OCCURRENCE" eid="e141">update the team</EVENT> on the new timeline.
+The <EVENT class="OCCURRENCE" eid="e142">project report</EVENT> is due on <TIMEX3 tid="t159" type="DATE" value="XXXX-11-01">November 1</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e143">Go over the minutes</EVENT> from <TIMEX3 tid="t160" type="DATE" value="YESTERDAY">yesterday's</TIMEX3> <EVENT class="OCCURRENCE" eid="e144">meeting</EVENT>.
+The <EVENT class="OCCURRENCE" eid="e145">weekly marketing meeting</EVENT> is in <TIMEX3 tid="t161" type="DURATION" value="PT1H">one hour</TIMEX3>.
+I'll <EVENT class="OCCURRENCE" eid="e146">send the final draft</EVENT> <TIMEX3 tid="t162" type="DURATION" value="PT30M">in 30 minutes</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e147">security audit</EVENT> is scheduled for <TIMEX3 tid="t163" type="DATE" value="P2W">two weeks</TIMEX3> from now.
+I'm <EVENT class="OCCURRENCE" eid="e148">traveling</EVENT> to the headquarters on <TIMEX3 tid="t164" type="DATE" value="NEXT_MONTH">next month</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e149">client follow-up call</EVENT> is set for <TIMEX3 tid="t165" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e150">user acceptance testing</EVENT> will happen in <TIMEX3 tid="t166" type="DURATION" value="P2M">two months</TIMEX3>.
+<EVENT class="OCCURRENCE" eid="e151">Finalize the project plan</EVENT> with the team.
+The <EVENT class="OCCURRENCE" eid="e152">weekly sync-up</EVENT> is <TIMEX3 tid="t167" type="DATE" value="PRESENT_REF">today</TIMEX3> at <TIMEX3 tid="t168" type="TIME" value="T11:00">11 AM</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e153">board meeting</EVENT> will be held in <TIMEX3 tid="t169" type="DURATION" value="P1Y">one year</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e154">quarterly report</EVENT> is due at <TIMEX3 tid="t170" type="TIME" value="T17:00">5 PM</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e155">budget review</EVENT> is <TIMEX3 tid="t171" type="DATE" value="XXXX-WXX-2">next Tuesday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e156">kick-off meeting</EVENT> will be at <TIMEX3 tid="t172" type="TIME" value="T09:00">9 AM</TIMEX3>.
+We need to <EVENT class="OCCURRENCE" eid="e157">launch the campaign</EVENT> on <TIMEX3 tid="t173" type="DATE" value="XXXX-10-15">October 15</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e158">briefing session</EVENT> for the new hires is <TIMEX3 tid="t174" type="DATE" value="NEXT_WEEK">next week</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e159">product demo</EVENT> is set for <TIMEX3 tid="t175" type="DATE" value="TOMORROW">tomorrow</TIMEX3>.
+We will hold the <EVENT class="OCCURRENCE" eid="e160">final presentation</EVENT> at <TIMEX3 tid="t176" type="TIME" value="T16:00">4 PM</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e161">training session</EVENT> for the new software is on <TIMEX3 tid="t177" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e162">weekly meeting</EVENT> has been moved from <TIMEX3 tid="t178" type="DATE" value="XXXX-WXX-2">Tuesday</TIMEX3> to <TIMEX3 tid="t179" type="DATE" value="XXXX-WXX-4">Thursday</TIMEX3>.
+The team will <EVENT class="OCCURRENCE" eid="e163">have a strategy discussion</EVENT> in the <TIMEX3 tid="t180" type="TIME" value="TAF">afternoon</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e164">deadline</EVENT> for the project is <TIMEX3 tid="t181" type="DATE" value="XXXX-11-20">November 20</TIMEX3>.
+The <EVENT class="OCCURRENCE" eid="e165">client meeting</EVENT> is set for <TIMEX3 tid="t182" type="TIME" value="T10:00">10 AM</TIMEX3>.
+We will <EVENT class="OCCURRENCE" eid="e166">review the numbers</EVENT> <TIMEX3 tid="t183" type="DATE" value="TOMORROW">tomorrow</TIMEX3>.
   </TEXT>
 </TIMEML>
 

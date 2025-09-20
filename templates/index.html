@@ -547,156 +547,160 @@
         </div>
     </div>
 
- <script>
-    // ==============================================================================
-    //  MAIN CHAT MANAGER SCRIPT (COMPLETE AND CORRECTED)
-    // ==============================================================================
-    const chatArea = document.getElementById('chat-area');
-    const welcomeArea = document.getElementById('welcome-area');
-    const textInput = document.getElementById('text-input');
-    const sendBtn = document.getElementById('send-btn');
-    let isFirstMessage = true;
+    <script>
+        // ==============================================================================
+        //  MAIN CHAT MANAGER SCRIPT (COMPLETE AND CORRECTED)
+        // ==============================================================================
+        const chatArea = document.getElementById('chat-area');
+        const welcomeArea = document.getElementById('welcome-area');
+        const textInput = document.getElementById('text-input');
+        const sendBtn = document.getElementById('send-btn');
+        let isFirstMessage = true;
 
-    // --- State Management Variables ---
-    let conversationState = 'IDLE';
-    let pendingEventData = null;
-    let missingInfoType = null;
-    let lastBackendResponse = null;
-    let selectedModelId = null;
+        // --- State Management Variables ---
+        let conversationState = 'IDLE';
+        let pendingEventData = null;
+        let missingInfoType = null;
+        let lastBackendResponse = null;
+        let selectedModelId = null;
 
-    // --- Event Listeners (Corrected) ---
-    textInput.addEventListener('input', () => {
-        textInput.style.height = 'auto';
-        textInput.style.height = Math.min(textInput.scrollHeight, 120) + 'px';
-        sendBtn.disabled = !textInput.value.trim();
-    });
-    textInput.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
-    sendBtn.addEventListener('click', sendMessage);
+        // --- Event Listeners (Corrected) ---
+        textInput.addEventListener('input', () => {
+            textInput.style.height = 'auto';
+            textInput.style.height = Math.min(textInput.scrollHeight, 120) + 'px';
+            sendBtn.disabled = !textInput.value.trim();
+        });
+        textInput.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+        sendBtn.addEventListener('click', sendMessage);
 
-    async function sendMessage() {
-        const message = textInput.value.trim();
-        if (!message) return;
-        addMessage(message, 'human');
-        const originalMessage = textInput.value;
-        textInput.value = ''; textInput.style.height = 'auto'; sendBtn.disabled = true;
+        async function sendMessage() {
+            const message = textInput.value.trim();
+            if (!message) return;
+            addMessage(message, 'human');
+            const originalMessage = textInput.value;
+            textInput.value = ''; textInput.style.height = 'auto'; sendBtn.disabled = true;
 
-        if (conversationState === 'WAITING_FOR_INFO') {
+            if (conversationState === 'WAITING_FOR_INFO') {
+                // --- DELEGATION ---
+                if (selectedModelId === 'xp_model') {
+                    await xp_handleMissingInfoResponse(originalMessage, missingInfoType, pendingEventData);
+                }
+                // Teammates will add their own else if blocks here
+            } else {
+                showTypingIndicator();
+                await processTextWithBackend(originalMessage);
+            }
+        }
+
+        // --- MISSING FUNCTION ADDED ---
+        async function processTextWithBackend(text) {
+            try {
+                const response = await fetch('/process-text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
+                if (!response.ok) { throw new Error(`Server responded with status: ${response.status}`); }
+                const data = await response.json();
+                lastBackendResponse = data; // Store the full response
+                hideTypingIndicator();
+                displayCombinedResults(data); // Call the function to display cards
+            } catch (error) {
+                handleError(error);
+            }
+        }
+
+        // --- MISSING FUNCTION ADDED ---
+        function displayCombinedResults(data) {
+            // Directly access your model's result from the backend response
+            const result = data.xp_model;
+
+            if (result.error) {
+                // If the backend returned an error, display it and stop.
+                addMessage(`I'm sorry, an error occurred: ${result.error}`, 'assistant');
+                return;
+            }
+
+            if (result.structured_data) {
+                // If we have structured data, treat it as if the user
+                // immediately selected it.
+
+                // Store the result globally so handleSelection can find it
+                lastBackendResponse = data;
+
+                // Automatically "select" your model's result to trigger the next step
+                handleSelection('xp_model');
+            } else {
+                // Handle cases where the model returns no data and no error
+                addMessage("I'm sorry, I wasn't able to understand that. Could you please try rephrasing?", 'assistant');
+            }
+        }
+
+        function handleSelection(modelId) {
+            const allButtons = document.querySelectorAll('.select-btn, .confirm-btn.no');
+            allButtons.forEach(btn => btn.disabled = true);
+            if (modelId === 'cancel') {
+                addMessage("My apologies. Could you please rephrase your request?", 'assistant');
+                resetState();
+                return;
+            }
+            selectedModelId = modelId;
+            const selectedCard = document.getElementById(`card-${modelId}`);
+            if (selectedCard) selectedCard.classList.add('selected');
+            const selectedData = lastBackendResponse[modelId].structured_data;
+            let confirmationMsg = `You selected:<br><br><b>Event:</b> ${selectedData.event_title || '<i>(missing)</i>'}<br><b>Date:</b> ${selectedData.date || '<i>(missing)</i>'}<br><b>Time:</b> ${selectedData.time || '<i>(missing)</i>'}<br>`;
+            addMessage(confirmationMsg, 'assistant', true);
             // --- DELEGATION ---
             if (selectedModelId === 'xp_model') {
-                await xp_handleMissingInfoResponse(originalMessage, missingInfoType, pendingEventData);
+                xp_processSelectedData(selectedData);
             }
-            // Teammates will add their own else if blocks here
-        } else {
-            showTypingIndicator();
-            await processTextWithBackend(originalMessage);
+            // Teammates add their logic here
         }
-    }
 
-    // --- MISSING FUNCTION ADDED ---
-    async function processTextWithBackend(text) {
-        try {
-            const response = await fetch('/process-text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
-            if (!response.ok) { throw new Error(`Server responded with status: ${response.status}`); }
-            const data = await response.json();
-            lastBackendResponse = data; // Store the full response
-            hideTypingIndicator();
-            displayCombinedResults(data); // Call the function to display cards
-        } catch (error) {
-            handleError(error);
+        // --- All functions below are GENERIC HELPERS used by all handlers ---
+        function askForMissingInfo(type, question, data) {
+            conversationState = 'WAITING_FOR_INFO';
+            missingInfoType = type;
+            pendingEventData = data;
+            addMessage(question + " (You can also say 'cancel' to stop.)", 'assistant');
         }
-    }
 
-    // --- MISSING FUNCTION ADDED ---
-    function displayCombinedResults(data) {
-        let resultsHtml = `I've analyzed the request. Please choose the best interpretation:<br><br><div id="results-container" class="results-container">`;
-        const models = [{ id: 'xp_model', name: "CRF Model" }, { id: 'teammate_A_model', name: "Teammate A's Model" }, { id: 'teammate_B_model', name: "Teammate B's Model" }];
-        models.forEach(model => {
-            const result = data[model.id];
-            resultsHtml += `<div class="result-card" id="card-${model.id}"><h4>${model.name}</h4>`;
-            if (result.error) {
-                resultsHtml += `<span style="color: #d67676;">Error: ${result.error}</span>`;
-            } else if (result.structured_data) {
-                const d = result.structured_data;
-                resultsHtml += `<b>Event:</b> ${d.event_title || '<i>(missing)</i>'}<br><b>Date:</b> ${d.date || '<i>(missing)</i>'}<br><b>Time:</b> ${d.time || '<i>(missing)</i>'}<br>`;
-                resultsHtml += `<button class="select-btn" onclick="handleSelection('${model.id}')">✔ Select this one</button>`;
+        function displayFinalConfirmation(data) {
+            let finalHtml = `Perfect! Here are the complete details:<br><br><b>Event:</b> ${data.event_title}<br><b>Date:</b> ${data.date}<br><b>Time:</b> ${data.time}<br><br>Is this correct?<br>`;
+            finalHtml += `<div class="confirmation-buttons"><button class="confirm-btn yes" onclick="finalizeEvent(true)">✔ Yes, save it</button><button class="confirm-btn no" onclick="finalizeEvent(false)">✖ No, cancel</button></div>`;
+            addMessage(finalHtml, 'assistant', true);
+            textInput.disabled = true;
+            textInput.placeholder = "Please confirm or cancel above...";
+            sendBtn.disabled = true;
+        }
+
+        function finalizeEvent(isConfirmed) {
+            const allButtons = document.querySelectorAll('.confirm-btn.yes, .confirm-btn.no');
+            allButtons.forEach(btn => btn.disabled = true);
+            if (isConfirmed) {
+                addMessage("Excellent! I have saved that for you.", 'assistant');
             } else {
-                resultsHtml += "No structured data found.";
+                addMessage("Okay, I've cancelled this request. How else can I help?", 'assistant');
             }
-            resultsHtml += `</div>`;
-        });
-        resultsHtml += `</div><div class="confirmation-buttons"><button class="confirm-btn no" onclick="handleSelection('cancel')">✖ None are correct</button></div>`;
-        addMessage(resultsHtml, 'assistant', true);
-    }
-
-    function handleSelection(modelId) {
-        const allButtons = document.querySelectorAll('.select-btn, .confirm-btn.no');
-        allButtons.forEach(btn => btn.disabled = true);
-        if (modelId === 'cancel') {
-            addMessage("My apologies. Could you please rephrase your request?", 'assistant');
+            textInput.disabled = false;
+            textInput.placeholder = "Tell me about your schedule...";
+            textInput.focus();
             resetState();
-            return;
         }
-        selectedModelId = modelId;
-        const selectedCard = document.getElementById(`card-${modelId}`);
-        if (selectedCard) selectedCard.classList.add('selected');
-        const selectedData = lastBackendResponse[modelId].structured_data;
-        let confirmationMsg = `You selected:<br><br><b>Event:</b> ${selectedData.event_title || '<i>(missing)</i>'}<br><b>Date:</b> ${selectedData.date || '<i>(missing)</i>'}<br><b>Time:</b> ${selectedData.time || '<i>(missing)</i>'}<br>`;
-        addMessage(confirmationMsg, 'assistant', true);
-        // --- DELEGATION ---
-        if (selectedModelId === 'xp_model') {
-            xp_processSelectedData(selectedData);
+
+        // --- Duplication Removed ---
+        function resetState() {
+            conversationState = 'IDLE';
+            pendingEventData = null;
+            missingInfoType = null;
+            lastBackendResponse = null;
+            selectedModelId = null;
         }
-        // Teammates add their logic here
-    }
 
-    // --- All functions below are GENERIC HELPERS used by all handlers ---
-    function askForMissingInfo(type, question, data) {
-        conversationState = 'WAITING_FOR_INFO';
-        missingInfoType = type;
-        pendingEventData = data;
-        addMessage(question + " (You can also say 'cancel' to stop.)", 'assistant');
-    }
-
-    function displayFinalConfirmation(data) {
-        let finalHtml = `Perfect! Here are the complete details:<br><br><b>Event:</b> ${data.event_title}<br><b>Date:</b> ${data.date}<br><b>Time:</b> ${data.time}<br><br>Is this correct?<br>`;
-        finalHtml += `<div class="confirmation-buttons"><button class="confirm-btn yes" onclick="finalizeEvent(true)">✔ Yes, save it</button><button class="confirm-btn no" onclick="finalizeEvent(false)">✖ No, cancel</button></div>`;
-        addMessage(finalHtml, 'assistant', true);
-        textInput.disabled = true;
-        textInput.placeholder = "Please confirm or cancel above...";
-        sendBtn.disabled = true;
-    }
-
-    function finalizeEvent(isConfirmed) {
-        const allButtons = document.querySelectorAll('.confirm-btn.yes, .confirm-btn.no');
-        allButtons.forEach(btn => btn.disabled = true);
-        if (isConfirmed) {
-            addMessage("Excellent! I have saved that for you.", 'assistant');
-        } else {
-            addMessage("Okay, I've cancelled this request. How else can I help?", 'assistant');
-        }
-        textInput.disabled = false;
-        textInput.placeholder = "Tell me about your schedule...";
-        textInput.focus();
-        resetState();
-    }
-
-    // --- Duplication Removed ---
-    function resetState() {
-        conversationState = 'IDLE';
-        pendingEventData = null;
-        missingInfoType = null;
-        lastBackendResponse = null;
-        selectedModelId = null;
-    }
-
-    // --- Other UI helper functions ---
-    function addMessage(text, sender, isHtml = false) { const messageDiv = document.createElement('div'); messageDiv.className = `message ${sender}-message`; if (sender === 'human') { messageDiv.innerHTML = `<div class="message-content">${text}</div>`; } else { const contentDiv = document.createElement('div'); contentDiv.className = 'message-content'; if (isHtml) { contentDiv.innerHTML = text; } else { contentDiv.textContent = text; } const avatar = `<div class="assistant-avatar">L</div>`; messageDiv.innerHTML = avatar; messageDiv.appendChild(contentDiv); } chatArea.appendChild(messageDiv); chatArea.scrollTop = chatArea.scrollHeight; }
-    function removeWelcome() { if (isFirstMessage && welcomeArea) { welcomeArea.style.display = 'none'; isFirstMessage = false; } }
-    function showTypingIndicator() { const typingDiv = document.createElement('div'); typingDiv.id = 'typing-indicator'; typingDiv.className = 'message typing-indicator'; typingDiv.innerHTML = `<div class="assistant-avatar">L</div><div class="typing-content"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class.dot"></div></div><span style="color: #a8956f; font-size: 14px; margin-left: 6px; font-weight: 300;">Luna is thinking...</span></div>`; chatArea.appendChild(typingDiv); chatArea.scrollTop = chatArea.scrollHeight; }
-    function hideTypingIndicator() { const indicator = document.getElementById('typing-indicator'); if (indicator) { indicator.remove(); } }
-    function handleError(error) { console.error('Error:', error); hideTypingIndicator(); addMessage('I apologize, there was an error. Please check the console and try again.', 'assistant'); resetState(); }
-    window.addEventListener('load', () => { textInput.focus(); });
-</script>
+        // --- Other UI helper functions ---
+        function addMessage(text, sender, isHtml = false) { const messageDiv = document.createElement('div'); messageDiv.className = `message ${sender}-message`; if (sender === 'human') { messageDiv.innerHTML = `<div class="message-content">${text}</div>`; } else { const contentDiv = document.createElement('div'); contentDiv.className = 'message-content'; if (isHtml) { contentDiv.innerHTML = text; } else { contentDiv.textContent = text; } const avatar = `<div class="assistant-avatar">L</div>`; messageDiv.innerHTML = avatar; messageDiv.appendChild(contentDiv); } chatArea.appendChild(messageDiv); chatArea.scrollTop = chatArea.scrollHeight; }
+        function removeWelcome() { if (isFirstMessage && welcomeArea) { welcomeArea.style.display = 'none'; isFirstMessage = false; } }
+        function showTypingIndicator() { const typingDiv = document.createElement('div'); typingDiv.id = 'typing-indicator'; typingDiv.className = 'message typing-indicator'; typingDiv.innerHTML = `<div class="assistant-avatar">L</div><div class="typing-content"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div><span style="color: #a8956f; font-size: 14px; margin-left: 6px; font-weight: 300;">Luna is thinking...</span></div>`; chatArea.appendChild(typingDiv); chatArea.scrollTop = chatArea.scrollHeight; }
+        function hideTypingIndicator() { const indicator = document.getElementById('typing-indicator'); if (indicator) { indicator.remove(); } }
+        function handleError(error) { console.error('Error:', error); hideTypingIndicator(); addMessage('I apologize, there was an error. Please check the console and try again.', 'assistant'); resetState(); }
+        window.addEventListener('load', () => { textInput.focus(); });
+    </script>
 </body>
 
 </html>

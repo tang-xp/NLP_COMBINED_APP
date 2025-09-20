@@ -1,162 +1,148 @@
-import re
-import joblib
+import re, joblib
 from collections import Counter
 
-# --- ALL HELPER FUNCTIONS MUST BE IN THIS FILE ---
-
 def improve_training_labels(train_data, test_data):
-    """
-    Improves BIO labels to better capture multi-word events by applying regex patterns.
-    """
-    
-    # Patterns for multi-word events that should be labeled together
-    multi_word_patterns = [
-        # Adjective + Event
-        (r'\b(final|initial|first|last|next|upcoming|scheduled|planned)\s+(review|meeting|presentation|call|demo|session|discussion|interview)\b', 'EVENT'),
-        (r'\b(team|company|client|project|weekly|monthly|daily|quarterly|annual)\s+(meeting|review|session|call|dinner|lunch|party)\b', 'EVENT'),
-        (r'\b(code|design|performance|budget|status|progress)\s+(review|meeting|session|discussion)\b', 'EVENT'),
+    """Enhanced regex-based relabeling to capture multi-word events including standalone event words."""
+    patterns = [
+        # Original patterns
+        (r'\b(final|initial|first|last|next|upcoming|scheduled|planned)\s+(review|meeting|presentation|call|demo|session|discussion|interview)\b','EVENT'),
+        (r'\b(team|company|client|project|weekly|monthly|daily|quarterly|annual)\s+(meeting|review|session|call|dinner|lunch|party)\b','EVENT'),
+        (r'\b(code|design|performance|budget|status|progress)\s+(review|meeting|session|discussion)\b','EVENT'),
+        (r'\b(kick[- ]?off|follow[- ]?up|stand[- ]?up)\s*(meeting|session|call)?\b','EVENT'),
+        (r'\b(brainstorm(?:ing)?|planning|training|onboarding)\s+(session|meeting|workshop|call)\b','EVENT'),
+        (r'\b(quick|brief|short|long|important|urgent)\s+(call|meeting|chat|sync|discussion)\b','EVENT'),
+        (r'\b(one-on-one|1-on-1|all-hands|all hands on deck)\s*(meeting|call|session)?\b','EVENT'),
+        (r'\b(hr|marketing|sales|engineering|product|design)\s+(meeting|review|session|interview)\b','EVENT'),
         
-        # Compound events
-        (r'\b(kick-off|kickoff|follow-up|followup|stand-up|standup)\s*(meeting|session|call)?\b', 'EVENT'),
-        (r'\b(brainstorm|brainstorming|planning|training|onboarding)\s+(session|meeting|workshop|call)\b', 'EVENT'),
+        # NEW: Patterns for standalone event words followed by "with"
+        (r'\b(dinner|lunch|breakfast|meeting|call|session|interview|presentation|demo)\s+with\s+\w+(?:\s+and\s+\w+)*\b','EVENT'),
+        (r'\b(coffee|drinks|chat|sync|catchup|catch-up)\s+with\s+\w+(?:\s+and\s+\w+)*\b','EVENT'),
         
-        # Event with descriptor
-        (r'\b(quick|brief|short|long|important|urgent)\s+(call|meeting|chat|sync|discussion)\b', 'EVENT'),
-        (r'\b(one-on-one|1-on-1|all-hands|all hands on deck)\s*(meeting|call|session)?\b', 'EVENT'),
+        # NEW: More flexible event patterns
+        (r'\b(conference|workshop|seminar|webinar|training)\s+(?:on|about|with|for)\s+\w+\b','EVENT'),
+        (r'\b(party|celebration|gathering|meetup)\s+(?:with|for|at)\s+\w+\b','EVENT'),
         
-        # Department/role + event
-        (r'\b(hr|marketing|sales|engineering|product|design)\s+(meeting|review|session|interview)\b', 'EVENT'),
+        # NEW: Event words that can stand alone or with prepositions
+        (r'\b(appointment|consultation|checkup|visit)\s+(?:with|at|for)\s+\w+\b','EVENT'),
+        (r'\b(rehearsal|practice|drill|exercise)\s+(?:with|for|at)\s+\w+\b','EVENT'),
+        
+        # NEW: Time-based events
+        (r'\b(morning|afternoon|evening|tonight)\s+(meeting|call|session|dinner|lunch)\b','EVENT'),
+        
+        # NEW: Catch broader event contexts
+        (r'\b(group|team|staff|board)\s+(meeting|dinner|lunch|session|retreat)\b','EVENT'),
     ]
-    
-    def enhance_sentence_labels(tokens, labels):
-        """Enhance BIO labels for a single sentence"""
-        text = ' '.join(tokens).lower()
-        new_labels = labels.copy()
-        
-        # Apply each pattern
-        for pattern, label_type in multi_word_patterns:
-            for match in re.finditer(pattern, text):
-                match_text = match.group().strip()
-                match_words = match_text.split()
-                
-                start_idx = find_token_span(tokens, match_words)
-                
-                if start_idx != -1:
-                    if len(match_words) == 1:
-                        new_labels[start_idx] = f'B-{label_type}'
-                    else:
-                        new_labels[start_idx] = f'B-{label_type}'
-                        for i in range(1, len(match_words)):
-                            if start_idx + i < len(new_labels):
-                                new_labels[start_idx + i] = f'I-{label_type}'
-        return new_labels
-    
-    def find_token_span(tokens, target_words):
-        """Find where a sequence of words appears in the token list (case-insensitive)"""
-        tokens_lower = [t.lower() for t in tokens]
-        target_lower = [w.lower() for w in target_words]
-        
-        for i in range(len(tokens_lower) - len(target_lower) + 1):
-            if tokens_lower[i:i+len(target_lower)] == target_lower:
+
+    def find_span(tokens, target):
+        """Find the starting index of target words in tokens (case-insensitive)."""
+        low_toks = [t.lower() for t in tokens]
+        low_tgt = [w.lower() for w in target]
+        for i in range(len(low_toks) - len(low_tgt) + 1):
+            if low_toks[i:i+len(low_tgt)] == low_tgt:
                 return i
         return -1
 
-    print("Enhancing training data labels...")
-    enhanced_train_data = []
-    train_improvements = 0
-    for tokens, labels in train_data:
-        new_labels = enhance_sentence_labels(tokens, labels)
-        if new_labels != labels:
-            train_improvements += 1
-        enhanced_train_data.append((tokens, new_labels))
-    print(f"Improved labels in {train_improvements} training sentences.")
-    
-    print("Enhancing test data labels...")
-    enhanced_test_data = []
-    test_improvements = 0
-    for tokens, labels in test_data:
-        new_labels = enhance_sentence_labels(tokens, labels)
-        if new_labels != labels:
-            test_improvements += 1
-        enhanced_test_data.append((tokens, new_labels))
-    print(f"Improved labels in {test_improvements} test sentences.")
+    def enhance(tokens, labels):
+        """Apply regex patterns to enhance labels."""
+        txt = ' '.join(tokens).lower()
+        new = labels.copy()
+        
+        for pat, lbl in patterns:
+            for m in re.finditer(pat, txt):
+                # Get the matched phrase and split into words
+                matched_phrase = m.group().strip()
+                words = matched_phrase.split()
+                
+                # Find where this phrase starts in our token list
+                s = find_span(tokens, words)
+                if s != -1:
+                    # Label the entire matched phrase
+                    new[s] = f"B-{lbl}"
+                    for i in range(1, len(words)):
+                        if s + i < len(new):
+                            new[s + i] = f"I-{lbl}"
+        
+        return new
 
-    return enhanced_train_data, enhanced_test_data
+    def process(data, name):
+        print(f"Enhancing {name} data...")
+        improved, count = [], 0
+        for toks, labs in data:
+            new_labs = enhance(toks, labs)
+            if new_labs != labs: 
+                count += 1
+            improved.append((toks, new_labs))
+        print(f"Improved {count} sentences.")
+        return improved
 
-def analyze_label_distribution(data, name):
-    """Analyzes the distribution of BIO labels."""
+    return process(train_data, "training"), process(test_data, "test")
+
+
+def analyze_distribution(data, name):
     print(f"\n--- {name} Label Analysis ---")
-    label_counts = Counter(label for _, labels in data for label in labels)
-    for label, count in label_counts.most_common():
-        percentage = (count / sum(label_counts.values())) * 100
-        print(f"  {label:<10} | {count:5,} ({percentage:4.1f}%)")
+    c = Counter(l for _, labs in data for l in labs)
+    total = sum(c.values())
+    for lbl, cnt in c.most_common():
+        print(f"{lbl:<10} | {cnt:5} ({cnt/total*100:4.1f}%)")
 
-def create_better_training_examples():
-    """Creates additional high-quality, manually labeled training examples."""
+
+def create_manual_examples():
+    """Create manual training examples for common multi-word events."""
     return [
-        # Multi-word events
-        (["Final", "review", "of", "the", "project", "with", "the", "team", "."], 
-         ["B-EVENT", "I-EVENT", "I-EVENT", "I-EVENT", "I-EVENT", "O", "O", "O", "O"]),
+        # Fixed: "Dinner with John" should be fully labeled as EVENT
+        (["Dinner","with","John","."],
+         ["B-EVENT","I-EVENT","I-EVENT","O"]),
         
-        (["Dinner", "with", "Alex", "and", "Sam", "."], 
-         ["B-EVENT", "O", "O", "O", "O", "O"]),
-
-        (["A", "meeting", "with", "Jessica", "tomorrow", "."], 
-         ["O", "B-EVENT", "O", "O", "B-DATE", "O"]),
-
-        (["Sync", "up", "with", "Chris", "on", "Friday", "."],
-         ["B-EVENT", "I-EVENT", "O", "O", "O", "B-DATE", "O"]),
+        (["Lunch","with","Sarah","and","Mike","tomorrow","."],
+         ["B-EVENT","I-EVENT","I-EVENT","I-EVENT","I-EVENT","B-DATE","O"]),
+         
+        (["Coffee","with","the","team","this","afternoon","."],
+         ["B-EVENT","I-EVENT","I-EVENT","I-EVENT","B-TIME","I-TIME","O"]),
         
-        (["Lunch", "with", "the", "marketing", "team", "and", "David", "."],
-         ["B-EVENT", "O", "O", "O", "O", "O", "O", "O"]),
-
-        (["Company", "party", "tonight", "at", "8", "pm", "."], 
-         ["B-EVENT", "I-EVENT", "B-DATE", "O", "B-TIME", "I-TIME", "O"]),
+        (["Final","review","of","the","project","with","the","team","."],
+         ["B-EVENT","I-EVENT","I-EVENT","I-EVENT","I-EVENT","I-EVENT","I-EVENT","I-EVENT","O"]),
         
-        (["Schedule", "a", "team", "meeting", "for", "next", "Friday", "."], 
-         ["O", "O", "B-EVENT", "I-EVENT", "O", "B-DATE", "I-DATE", "O"]),
+        (["A","meeting","with","Jessica","tomorrow","."],
+         ["O","B-EVENT","I-EVENT","I-EVENT","B-DATE","O"]),
          
-        (["Quick", "call", "with", "the", "client", "tomorrow", "morning", "."], 
-         ["B-EVENT", "I-EVENT", "O", "O", "O", "B-DATE", "I-DATE", "O"]),
+        (["Staff","party","with","everyone","next","Friday","."],
+         ["B-EVENT","I-EVENT","I-EVENT","I-EVENT","B-DATE","I-DATE","O"]),
          
-        (["One-on-one", "meeting", "with", "my", "manager", "at", "2", "pm", "."], 
-         ["B-EVENT", "I-EVENT", "O", "O", "O", "O", "B-TIME", "I-TIME", "O"]),
+        # Additional examples for better coverage
+        (["Morning","standup","with","the","development","team","."],
+         ["B-EVENT","I-EVENT","I-EVENT","I-EVENT","I-EVENT","I-EVENT","O"]),
          
-        (["Code", "review", "session", "scheduled", "for", "this", "afternoon", "."], 
-         ["B-EVENT", "I-EVENT", "I-EVENT", "O", "O", "B-DATE", "I-DATE", "O"]), # Assuming "this afternoon" is a date
+        (["Client","presentation","scheduled","for","next","week","."],
+         ["B-EVENT","I-EVENT","O","O","B-DATE","I-DATE","O"]),
          
-        (["All-hands", "meeting", "on", "Friday", "at", "10", "am", "."], 
-         ["B-EVENT", "I-EVENT", "O", "B-DATE", "O", "B-TIME", "I-TIME", "O"]),
+        (["One-on-one","with","my","manager","at","3","PM","."],
+         ["B-EVENT","I-EVENT","I-EVENT","I-EVENT","O","B-TIME","I-TIME","O"]),
     ]
 
-# --- MAIN FUNCTION ---
 
 def enhance_your_training_data():
-    """Main function to load, enhance, and save your training data"""
-    print("--- Starting Data Enhancement Process ---")
+    print("--- Starting Data Enhancement ---")
     try:
-        train_data = joblib.load("xp/xp_train_data.pkl") 
-        test_data = joblib.load("xp/xp_test_data.pkl")
+        train = joblib.load("xp/xp_train_data.pkl")
+        test  = joblib.load("xp/xp_test_data.pkl")
     except FileNotFoundError:
-        print("\nERROR: Could not find 'xp/xp_train_data.pkl' or 'xp/xp_test_data.pkl'.")
-        print("Please ensure your data files are in the 'xp' folder before running.")
+        print("ERROR: Missing xp_train_data.pkl or xp_test_data.pkl")
         return
 
-    analyze_label_distribution(train_data, "Original Training Data")
+    analyze_distribution(train, "Original Training")
+    enhanced_train, enhanced_test = improve_training_labels(train, test)
     
-    enhanced_train, enhanced_test = improve_training_labels(train_data, test_data)
+    # Add manual examples
+    manual_examples = create_manual_examples()
+    enhanced_train.extend(manual_examples)
+    print(f"Added {len(manual_examples)} manual training examples.")
     
-    additional_examples = create_better_training_examples()
-    enhanced_train.extend(additional_examples)
-    
-    analyze_label_distribution(enhanced_train, "Enhanced Training Data")
-    
-    # Save the enhanced data back, overwriting the old files
+    analyze_distribution(enhanced_train, "Enhanced Training")
+
     joblib.dump(enhanced_train, "xp/xp_train_data.pkl")
-    joblib.dump(enhanced_test, "xp/xp_test_data.pkl")
-    
-    print("\n\n--- Data Enhancement Complete ---")
-    print("Enhanced training data has been saved, overwriting the old files!")
+    joblib.dump(enhanced_test,  "xp/xp_test_data.pkl")
+    print("✔ Enhancement complete. Files overwritten.")
+
 
 if __name__ == "__main__":
     enhance_your_training_data()
